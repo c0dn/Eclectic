@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+{% set active_page = "contact_us" %}
+{% block title %}Eclectic{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static' , filename='js/chatbot.js') }}"></script>
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/chatbot.css') }}">
+{% endblock %}
+
+{% block navbar %}
+{% include 'includes/_navbar.html' %}
+{% endblock %}
+
+{% block content %}
+<section class="accordion-section clearfix mt-3" aria-label="Question Accordions">
+  <div class="container">
+
+	  <div class="faq-title-container"><h2 class="faq-title">Frequently Asked Questions </h2></div>
+	  <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+		<div class="panel panel-default">
+		  <div class="panel-heading p-3 mb-3" role="tab" id="heading0">
+			<h3 class="panel-title">
+			  <a class="collapsed" role="button" title="" data-toggle="collapse" data-parent="#accordion" href="#collapse0" aria-expanded="true" aria-controls="collapse0">
+				 What is Eclectic
+			  </a>
+			</h3>
+		  </div>
+		  <div id="collapse0" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading0">
+			<div class="panel-body px-3 mb-4">
+			  <p class="px-3 mb-0">It means deriving ideas, style, or taste from a broad and diverse range of sources.</p>
+			</div>
+		  </div>
+		</div>
+
+		<div class="panel panel-default">
+		  <div class="panel-heading p-3 mb-3" role="tab" id="heading1">
+			<h3 class="panel-title">
+			  <a class="collapsed" role="button" title="" data-toggle="collapse" data-parent="#accordion" href="#collapse1" aria-expanded="true" aria-controls="collapse1">
+				Where do I go to claim my warranty?
+			  </a>
+			</h3>
+		  </div>
+		  <div id="collapse1" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading1">
+			<div class="panel-body px-3 mb-4">
+			  <p class="px-3 mb-0"> You can go to our physical store with address stated below or you can contact us through the number which is also stated below and we will provide you a walk-in service on the day you are suitable with. </p>
+			</div>
+		  </div>
+		</div>
+
+		<div class="panel panel-default">
+		  <div class="panel-heading p-3 mb-3" role="tab" id="heading2">
+			<h3 class="panel-title">
+			  <a class="collapsed" role="button" title="" data-toggle="collapse" data-parent="#accordion" href="#collapse2" aria-expanded="true" aria-controls="collapse2">
+				Can I make a refund?
+			  </a>
+			</h3>
+		  </div>
+		  <div id="collapse2" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading2">
+			<div class="panel-body px-3 mb-4">
+			  <p class="px-3 mb-0"> Unfortunately, for now. It is a no as we are confident that there is no issue with our product after the processes of product quality checking and if there is any issue, we will help you with the best of our ability.</p>
+			</div>
+		  </div>
+		</div>
+
+		<div class="panel panel-default">
+		  <div class="panel-heading p-3 mb-3" role="tab" id="heading3">
+			<h3 class="panel-title">
+			  <a class="collapsed" role="button" title="" data-toggle="collapse" data-parent="#accordion" href="#collapse3" aria-expanded="true" aria-controls="collapse3">
+				Why do we named Eclectic?
+			  </a>
+			</h3>
+		  </div>
+		  <div id="collapse3" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading3">
+			<div class="panel-body px-3 mb-4">
+			  <p class="px-3 mb-0">Eclectic means deriving ideas, style, or taste from a broad and diverse range of sources. We keen to be innovative in our product while staying competitive in the market with our market data analysis and creativity </p>
+			</div>
+		  </div>
+		</div>
+	  </div>
+
+  </div>
+</section>
+
+<hr>
+<div class="container">
+	<div class="row">
+		<div class="col-lg-6 col-sm-6">
+			<div id="eclectic-map"></div>
+		</div>
+		<div class="col-lg-6  col-sm-6">
+			<div class="container">
+				<h2> Contact </h2>
+				<br>
+				<p>Email : eclectic@gmail.com</p>
+				<p>Contact Number : +65 12345678</p>
+				<p>Address : 842 Ohio St.Hixson, TN 37343</p>
+			</div>
+    	</div>
+	</div>
+</div>
+
+
+<br>
+
+{% include 'includes/chatbot.html' %}
+
+<script>
+function initMap() {
+  var uluru = {lat: -25.344, lng: 131.036};
+  var map = new google.maps.Map(
+      document.getElementById("eclectic-map"), {zoom: 4, center: uluru});
+  var marker = new google.maps.Marker({position: uluru, map: map});
+}
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBNSFuln_Q7LRG5G420QUobz6rKolMe4sU&callback=initMap" type="text/javascript"></script>
+{% endblock %}
+
+{% block footer %}
+{% include 'includes/_footer.html' %}
+{% endblock %}

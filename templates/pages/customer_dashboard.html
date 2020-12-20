@@ -1,0 +1,37 @@
+<!-- Customer Dashboard -->
+<div class="dashboard-header d-flex justify-content-between">
+    <h2><span class="hamburger">&#9776;</span><span class="magic-eclectic"> Eclectic </span></h2>
+    <h3>{{ user.first_name }}</h3>
+</div>
+
+<div class="eclectic-sidenav d-flex flex-column ml-auto mr-auto">
+  <a href="/dashboard/products/" class="{{ 'eclectic-active2' if active_page == 'products' else '' }}">&nbsp;<i class="fas fa-mobile-alt"></i> Products</a>
+    <br>
+  <a href="/dashboard/cart/" class="{{ 'eclectic-active2' if active_page == 'cart' else '' }} "><i class="fas fa-shopping-cart"></i> View Cart</a>
+    <br>
+  <a href="/dashboard/orders/" class="{{ 'eclectic-active2' if active_page == 'order' else '' }} "><i class="fas fa-users"></i> View Order</a>
+    <br>
+  <a href="/dashboard/support/" class="{{ 'eclectic-active2' if active_page == 'ticket' else '' }}"><i class=" fas fa-ticket-alt"></i> Support Ticket</a>
+    <br>
+  <a href="/dashboard/account/" class="{{ 'eclectic-active2' if active_page == 'settings' else '' }} "><i class="fas fa-cog"></i> Account Settings</a>
+    <br>
+  <a href="/logout/"><i class="fas fa-sign-out-alt"></i> Log Out</a>
+    <br>
+</div>
+
+<div id="responsive-sidenav" class="responsive-sidenav">
+  <a href="javascript:void(0)" class="closebtn">&times;</a>
+  <a href="/dashboard/products/" class="{{ 'eclectic-active2' if active_page == 'products' else '' }}">&nbsp;<i class="fas fa-mobile-alt"></i> Products</a>
+    <br>
+  <a href="/dashboard/cart/" class="{{ 'eclectic-active2' if active_page == 'cart' else '' }} "><i class="fas fa-shopping-cart"></i> View Cart</a>
+    <br>
+  <a href="/dashboard/orders/" class="{{ 'eclectic-active2' if active_page == 'order' else '' }} "><i class="fas fa-users"></i> View Order</a>
+    <br>
+  <a href="/dashboard/support/" class="{{ 'eclectic-active2' if active_page == 'ticket' else '' }}"><i class=" fas fa-ticket-alt"></i> Support Ticket</a>
+    <br>
+  <a href="/dashboard/account/" class="{{ 'eclectic-active2' if active_page == 'settings' else '' }} "><i class="fas fa-cog"></i> Account Settings</a>
+    <br>
+  <a href="/logout/"><i class="fas fa-sign-out-alt"></i> Log Out</a>
+    <br>
+</div>
+

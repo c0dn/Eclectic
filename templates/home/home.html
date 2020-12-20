@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+{% set active_page = "home" %}
+{% block title %}Eclectic{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static' , filename='js/chatbot.js') }}"></script>
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/chatbot.css') }}">
+{% endblock %}
+
+{% block navbar %}
+{% include 'includes/_navbar.html' %}
+{% endblock %}
+
+{% block content %}
+<!--Carousel Wrapper-->
+<div id="carousel-example-2" class="carousel slide carousel-fade" data-ride="carousel">
+  <!--Indicators-->
+  <ol class="carousel-indicators">
+    <li data-target="#carousel-example-2" data-slide-to="0" class="active"></li>
+    <li data-target="#carousel-example-2" data-slide-to="1"></li>
+    <li data-target="#carousel-example-2" data-slide-to="2"></li>
+  </ol>
+  <!--/.Indicators-->
+  <!--Slides-->
+  <br>
+  <br>
+  <div class="carousel-inner" role="listbox">
+    <div class="carousel-item active">
+      <div class="view">
+        <img class="d-block w-100" src="../static/media/Home(1).png"
+          alt="First slide">
+        <div class="mask rgba-black-light"></div>
+      </div>
+      <div class="carousel-caption">
+      </div>
+    </div>
+    <div class="carousel-item">
+      <!--Mask color-->
+      <div class="view">
+        <img class="d-block w-100" src="../static/media/Home(2).png"
+          alt="Second slide">
+        <div class="mask rgba-black-strong"></div>
+      </div>
+      <div class="carousel-caption">
+      </div>
+    </div>
+    <div class="carousel-item">
+      <!--Mask color-->
+      <div class="view">
+        <img class="d-block w-100" src="../static/media/Home(3).png"
+          alt="Third slide">
+        <div class="mask rgba-black-slight"></div>
+      </div>
+      <div class="carousel-caption">
+      </div>
+    </div>
+  </div>
+  <!--/.Slides-->
+  <!--Controls-->
+  <a class="carousel-control-prev" href="#carousel-example-2" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#carousel-example-2" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+  <!--/.Controls-->
+</div>
+<!--/.Carousel Wrapper-->
+
+<!-- Image For Phone -->
+  <div class="home-img row">
+   <img class="w-100" src="../static/media/Home(1).png" alt="Home Image">
+  </div>
+<br>
+<hr>
+<br>
+<div class="card-deck">
+  <div class="shadow p-3 mb-5 bg-dark rounded card">
+    <img src="../static/media/Newest_Product.png" class="card-img-top" alt="...">
+    <div class="card-body">
+      <h5 class="font-weight-bold card-title text-light">Eclectic Wireless Earbud</h5>
+      <p class="card-text text-light">Introducing Eclectic Wireless Earbud, the newest innovative wireless earbud from Eclectic Electronics. The new Eclectic Earbud features active noise cancelling, IPX7 Waterproof rating and other features. Guaranteed to satisfy consumer needs with our latest technology. </p>
+    </div>
+  </div>
+  <div class="shadow p-3 mb-5 bg-dark rounded card">
+    <img src="../static/media/Award.png" class="card-img-top" alt="...">
+    <div class="card-body">
+      <h5 class="card-title text-light font-weight-bold">Company Achievement</h5>
+      <p class="card-text text-light">We have been given multiple "Award for Corporate Excellence". This is impossible to achieve without the continuous support of our partners. Thank you for your trust in Eclectic.</p>
+    </div>
+  </div>
+  <div class="shadow p-3 mb-5 bg-dark rounded card">
+    <img src="../static/media/Delivery.png" class="card-img-top" alt="...">
+    <div class="card-body">
+      <h5 class="font-weight-bold text-light card-title">2F Delivery</h5>
+      <p class="card-text text-light">Eclectic provides 2F(Free and Fast) Delivery Service to our customers. The delivery is completely free worldwide and we promised to provide fast delivering with maximum delivering time of 2 week.</p>
+    </div>
+  </div>
+</div>
+
+{% include 'includes/chatbot.html' %}
+
+{% endblock %}
+
+{% block footer %}
+{% include 'includes/_footer.html' %}
+{% endblock %}

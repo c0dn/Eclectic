@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% set active_page = "login" %}
+{% block title %}Eclectic{% endblock %}
+
+{% block scripts %}
+  <script src="{{ url_for('static' , filename='js/login.js') }}"></script>
+{% endblock %}
+
+{% block css %}
+{% endblock %}
+
+{% block navbar %}
+{% include 'includes/_navbar.html' %}
+{% endblock %}
+
+{% block content %}
+<br>
+<div class="container">
+    <div class="login-header">
+        <h2 style="margin-bottom: 0px;">Login</h2>
+    </div>
+    <div class="login-card">
+      <form action="" method="post" id="eclectic-login-form">
+		{{ form.hidden_tag() }}
+        <br>
+        <label>Email / Staff ID : </label>
+        <input type="text" name="username" placeholder="Email / Staff ID" value="{{ form.username.data }}" required>
+        <label>Password : </label>
+        <input name="password" type="password" placeholder="Password" value="{{ form.password.data }}" required>
+        <input type="submit" name="submit_btn" class="login login-submit" value="login">
+      </form>
+      <div class="login-help">
+        <a class="register-href" href="/register/">Register</a><a class="forget-password-href" href="/forget/">Forgot Password</a>
+      </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block footer %}
+{% endblock %}

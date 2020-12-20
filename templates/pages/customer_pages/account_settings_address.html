@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Eclectic Change Address {% endblock %}
+{% set active_page = "settings" %}
+{% block scripts %}
+  <script src="{{ url_for('static' , filename='js/account_settings.js') }}"></script>
+{% endblock %}
+
+{% block css %}{% endblock %}
+
+{% block navbar %}
+<!-- Logic to check logged in user and display relevant dashboard-->
+    {% if staff %}
+        {% include "pages/staff_dashboard.html" %}
+    {% else %}
+        {% include "pages/customer_dashboard.html" %}
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="main">
+    <br>
+    <div class="eclectic-back-container">
+        <a href="/dashboard/account/" class="eclectic-back-btn"><i class="fas fa-angle-left"></i> Back</a>
+    </div>
+    <br>
+  <form method="post" action="" id="eclectic-address-form">
+    <div class="account-settings-container change-address">
+      {{ form.hidden_tag() }}
+        <h2 class="text-center">Change Address</h2>
+        <hr>
+        <p><span class="detail-label">{{ form.address.label }}</span><br>{{ form.address() }}</p><br>
+        <p><span class="detail-label">{{ form.country.label }}</span><br>{{ form.country() }}</p><br>
+        <p><span class="detail-label">{{ form.city.label }}</span><br>{{ form.city() }}</p><br>
+        <p><span class="detail-label">{{ form.postal.label }}</span><br>{{ form.postal() }}</p>
+        <br>
+        {{ form.submit_btn() }}
+    </div>
+  </form>
+</div>
+{% endblock %}

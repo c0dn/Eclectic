@@ -1,0 +1,33 @@
+<button class="open-button"><i class="fas fa-comment"></i></button>
+
+<div class="chatbot-popup " id="chatbot">
+  <div class="chatbot-header d-flex justify-content-between">
+      <div>
+          <img class="float-left chatbot-img" src="{{ url_for('static' , filename='media/chatbot.png') }}" alt="chatbot-Avatar">
+          <h3 class="zoro float-right">Zoro</h3>
+      </div>
+    <button id="close-chat-ui" type="button" class="btn cancel"><i class="fas fa-times"></i></button>
+  </div>
+
+   <div class="chatbot-messages" id="chatbot-messages">
+        <div class="bubbleWrapper" id="bubble-zoro-loading">
+            <div class="inlineContainer other ">
+                <div class="chatbot-bubble chatbot-loading otherBubble other">
+                    <img class="loading-container" src="{{ url_for('static' , filename='media/loading.gif') }}" alt="chatbot-loading">
+                </div>
+            </div>
+        </div>
+
+   </div>
+
+    <div class="chatbot-input-container border-info border-top">
+        <p class="chatbot-reply">Reply to Zoro</p>
+        <div class="chatbot-input">
+            <input class="p-1" type="text" name="msg" required disabled>
+            <button class="send-btn" type="submit" disabled><i class="fas fa-arrow-alt-circle-right"></i></button>
+        </div>
+    </div>
+</div>
+
+
+

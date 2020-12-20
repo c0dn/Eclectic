@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Eclectic Account Settings{% endblock %}
+{% set active_page = "settings" %}
+{% block scripts %}
+    <script src="{{ url_for('static' , filename='js/account_settings.js') }}"></script>
+{% endblock %}
+
+{% block css %}{% endblock %}
+
+{% block navbar %}
+<!-- Logic to check logged in user and display relevant dashboard-->
+    {% if staff %}
+        {% include "pages/staff_dashboard.html" %}
+    {% else %}
+        {% include "pages/customer_dashboard.html" %}
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="main">
+    <br>
+    <div class="account-settings-container">
+        <h2 class="text-center">My Account</h2>
+        <hr>
+        <p><span class="detail-label">Name:</span> {{ user.get_name() }}</p>
+        <p><span class="detail-label">Gender:</span> {{ user.gender }}</p>
+        <p id="eclectic-number">
+          <span class="detail-label">Phone number:</span>
+            <i id="eclectic-number-edit" class="far fa-edit"></i>
+            <br>
+          {{ user.contact_number }}
+        </p>
+        <p id="eclectic-email">
+            <span class="detail-label">Email:</span>
+            <i id="eclectic-email-edit" class="far fa-edit"></i>
+            <br>
+          {{ user.email }}
+        </p>
+        {% if not staff %}
+        <p><span class="detail-label">Mailing Address:</span><a href="/dashboard/account/address/"><i class="far fa-edit"></i></a>
+            <br> {{ user.get_address() }}</p>
+        {% endif %}
+        <a class="change-password" href="/dashboard/account/change-password/">Change password</a>
+    </div>
+</div>
+
+{% endblock %}

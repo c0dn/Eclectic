@@ -1,0 +1,16 @@
+<!--Logo-->
+<header class="eclectic-logocontainer">
+    <h1 class="eclectic-logo">Eclectic</h1>
+</header>
+
+<!--Navigation Bar-->
+<nav class="eclectic-topnav" id="myTopnav">
+  <a href="/" class="{{ 'eclectic-active' if active_page == 'home' else '' }}">Home</a>
+  <a href="/products" class="{{ 'eclectic-active' if active_page == 'products' else '' }}">Products</a>
+  <a href="/contact_us" class="{{ 'eclectic-active' if active_page == 'contact_us' else '' }}">Contact Us</a>
+  <a href="/login" class="{{ 'eclectic-active' if active_page == 'login' else '' }}">Login</a>
+  <a href="#" class="icon eclectic-menu-btn">
+    <i class="fa fa-bars"></i>
+  </a>
+</nav>
+

@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% set active_page = "products" %}
+{% block title %}Eclectic{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static' , filename='js/chatbot.js') }}"></script>
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/chatbot.css') }}">
+{% endblock %}
+
+{% block navbar %}
+{% include 'includes/_navbar.html' %}
+{% endblock %}
+
+{% block content %}
+
+<!-- Search form -->
+<br>
+<form class="eclectic_search" action="/products">
+    <input type="text" placeholder="Search.." name="search">
+    <button type="submit"><span id="mont-font"><i class="fas fa-search"></i> Search</span></button>
+</form>
+<br>
+<div class="eclectic-back-container">
+<a href="/products" class="eclectic-back-btn"><i class="fas fa-angle-left"></i> Back</a>
+</div>
+<br>
+<hr>
+<div class="margin-top-container">
+    <div class="row">
+        <div class="col-sm-6">
+        <div class="eclectic-card">
+            <div class="eclectic-card-image"><img class="card-img" src="{{ product.pic_link }}" alt="product picture"></div>
+                <div class="eclectic-card-content">
+                    <h2 class="eclectic-card-title text-center">{{ product.get_title() }}</h2>
+                </div>
+        </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="eclectic-product-description">
+                <p class="description"><span style="font-weight: 800; font-size: 1.2em;">Description:</span> <br> {{ product.get_description() }}</p>
+                <br>
+                <p class="retail-price">Retail price: <span style="color: MediumBlue ;">${{ product.retail_price }}</span></p>
+                <br>
+                <a href="/login" class="product-detail-btn">Login to Purchase</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br>
+{% include 'includes/chatbot.html' %}
+{% endblock %}
+
+{% block footer %}
+{% include 'includes/_footer.html' %}
+{% endblock %}
+

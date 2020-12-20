@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% set active_page = "login" %}
+{% block title %}Eclectic{% endblock %}
+
+{% block scripts %}
+  <script src="{{ url_for('static' , filename='js/register.js') }}"></script>
+{% endblock %}
+
+{% block css %}
+{% endblock %}
+
+
+{% block navbar %}
+{% include 'includes/_navbar.html' %}
+{% endblock %}
+
+{% block content %}
+<br>
+<div class="eclectic-back-container">
+<a href="/login/" class="eclectic-back-btn"><i class="fas fa-angle-left"></i> Back</a>
+</div>
+
+<div class="row">
+<div class="container">
+    <div class="register-header">
+        <h2 style="margin-bottom: 0px;">Register</h2>
+    </div>
+    <div class="register-card">
+      <form method="post" id="eclectic-register-form">
+        <br>
+
+        <fieldset>
+        <div class="form-wrap form-wrap-left">
+            <label>First Name : </label>
+            <input type="text" name="firstName" placeholder="First Name" align="left" required>
+        </div>
+
+        <div class="form-wrap form-wrap-right">
+            <label>Last Name : </label>
+            <input type="text" name="lastName" placeholder="Last Name" align="right" required>
+        </div>
+
+        <div class="form-wrap form-wrap-left">
+            <label>Email : </label>
+            <input type="text" name="email" placeholder="Email" required>
+        </div>
+
+        <div class="form-wrap form-wrap-right">
+            <label>Phone Number : </label>
+            <input type="text" name="phoneNumber" placeholder="Phone Number" required>
+        </div>
+
+        <label>Gender : </label><br>
+        <input type="radio" name="gender" value="male" required> Male
+        <input type="radio" name="gender" value="female" required> Female<br>
+
+        <div class="form-wrap form-wrap-left">
+            <label>Password : </label>
+            <input type="password" name="password" placeholder="Password" required>
+        </div>
+
+        <div class="form-wrap form-wrap-right">
+            <label>Confirm Password : </label>
+            <input id="register-confirm-pass" type="password" name="confirm" placeholder="Confirm Password" required>
+        </div>
+
+        </fieldset>
+        <br>
+
+        <fieldset>
+        <div class="form-wrap form-wrap-left">
+            <label>Address : </label>
+            <input type="text" name="address" placeholder="Address Line" required>
+        </div>
+
+        <div class="form-wrap form-wrap-right">
+            <label>City : </label>
+            <input type="text" name="city" placeholder="City" required>
+        </div>
+
+        <div class="form-wrap form-wrap-left">
+            <label>Postal code : </label>
+            <input type="text" name="postal" placeholder="Postal code" required>
+        </div>
+
+        <div class="form-wrap form-wrap-right">
+            <label>Country : </label><br>
+            {{ form.country() }}
+        </div>
+        </fieldset>
+
+        <br>
+        <input type="submit" name="register" class="register register-submit" value="Register">
+      </form>
+    </div>
+</div>
+</div>
+{% endblock %}
+
+{% block footer %}
+{% endblock %}
