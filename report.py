@@ -50,16 +50,17 @@ def profit(month_sale, monthly_profit_list):
         nov_profit += calculate_profit(month_sale)
     elif month_sale.get_created_datetime()[3:-5] == "12":
         dec_profit += calculate_profit(month_sale)
-    profit_list = [jan_profit,feb_profit,mar_profit,apr_profit,mar_profit,jun_profit,jul_profit,aug_profit,sep_profit,oct_profit,nov_profit,dec_profit]
+    profit_list = [jan_profit, feb_profit, mar_profit, apr_profit, mar_profit, jun_profit, jul_profit, aug_profit,
+                   sep_profit, oct_profit, nov_profit, dec_profit]
     return profit_list
 
 
 def calculate_profit(sale):
-    return (float(sale.product.retail_price)-float(sale.product.get_cost_price()))*float(sale.quantity)
+    return (float(sale.product.retail_price) - float(sale.product.get_cost_price())) * float(sale.quantity)
 
 
 def calculate_sale(sale):
-    return float(sale.product.retail_price)*float(sale.quantity)
+    return float(sale.product.retail_price) * float(sale.quantity)
 
 
 def reformat_list(profit_list):

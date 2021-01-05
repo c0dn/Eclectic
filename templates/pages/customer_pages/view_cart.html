@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% block title %}Eclectic Cart{% endblock %}
+{% set active_page = "cart" %}
+
+{% block scripts %}
+<script src="https://js.stripe.com/v3/"></script>
+<script src="{{ url_for('static' , filename='js/cart.js') }}"></script>
+<script src="{{ url_for('static' , filename='js/chatbot.js') }}"></script>
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/chatbot.css') }}">
+{% endblock %}
+
+
+{% block navbar %}
+<!-- Logic to check logged in user and display relevant dashboard-->
+    {% if staff %}
+        {% include "pages/staff_dashboard.html" %}
+    {% else %}
+        {% include "pages/customer_dashboard.html" %}
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="main">
+<br>
+    <div class="row justify-content-between">
+        <h2 class="page-header margin-left-dashboard col-sm">My Cart</h2>
+        <p class="eclectic-total col-sm">Total Price: $<span class="total-amount">{{ cart_total }}</span></p>
+    </div>
+<hr class="width-95">
+<div class="margin-left-dashboard">
+    <!-- My Cart-->
+      {% if cart_items != [] %}
+        <div class="eclectic-table-wrapper">
+              <div class="eclectic-table">
+                    <div class="eclectic-row eclectic-table-header">
+                      <div class="eclectic-cell bg-light">
+                        Product
+                      </div>
+                      <div class="eclectic-cell bg-light">
+                        Quantity
+                      </div>
+                      <div class="eclectic-cell bg-light">
+                        Price ($)
+                      </div>
+                      <div class="eclectic-cell bg-light">
+                        Subtotal
+                      </div>
+                      <div class="eclectic-cell bg-light">
+                        Action
+                      </div>
+                    </div>
+                {% for item in cart_items %}
+                <div class="eclectic-row bg-white cart-entry">
+                  <div class="eclectic-cell border-bottom" data-title="">
+                      <img class="eclectic-item-img shadow p-3 bg-white rounded" src="{{ item.product.pic_link }}">
+                      <p class="ml-auto mr-auto font-weight-bold" style="margin-bottom: 0px;">{{ item.product.get_title() }}</p>
+                  </div>
+                  <div class="eclectic-cell border-bottom eclectic-quantity" data-title="Quantity">
+                      <input type="hidden" name="product_id" value="{{ item.product.get_id() }}">
+                      <input class="m-auto eclectic-cart-input" type="number" name="quantity" min="1" max="{{ item.product.stock }}" value="{{ item.quantity }}">
+                  </div>
+                  <div class="eclectic-cell border-bottom eclectic-price" data-title="Price">
+                      {{ item.product.retail_price }}
+                  </div>
+                  <div class="eclectic-cell border-bottom eclectic-item-total" data-title="Sub-Total">
+                      {{ item.sub_total }}
+                  </div>
+                  <div class="eclectic-cell border-bottom" data-title="Remove">
+                    <button type="button" id="remove-item" class="btn btn-danger remove-item">Remove</button>
+                  </div>
+                </div>
+                {% endfor %}
+
+            </div>
+        </div>
+        <div class="checkout-btn-container">
+            <button type="button" id="checkout" class="btn btn-info shadow rounded p-2 mr-5">Checkout</button>
+        </div>
+      {% else %}
+          <h2 class="eclectic-not-found"> Empty Cart </h2>
+      {% endif %}
+    </div>
+</div>
+{% include 'includes/chatbot.html' %}
+{% endblock %}

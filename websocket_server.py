@@ -113,6 +113,7 @@ async def main(websocket, path):
       print("> Sorry, I can only answer questions regarding the products we sell.")
       await websocket.send("You may contact our support team by opening a new request for assistance")
       print("> You may contact our support team by opening a new request for assistance")
+  print("- Connection closed")
 
 host = "localhost"
 port = 8000

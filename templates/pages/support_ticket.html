@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% set active_page = "ticket" %}
+{% block title %}Eclectic support {% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static' , filename='js/ticket.js') }}"></script>
+{% endblock %}
+
+{% block css %}{% endblock %}
+
+{% block navbar %}
+<!-- Logic to check logged in user and display relevant dashboard-->
+    {% if staff %}
+        {% include "pages/staff_dashboard.html" %}
+    {% else %}
+        {% include "pages/customer_dashboard.html" %}
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="main">
+    <br>
+    <h2 class="page-header margin-left-dashboard">My Tickets</h2>
+    <hr class="width-95">
+    <div class="margin-left-dashboard">
+        <div class="row m-0 align-items-center justify-content-around">
+            <div class="col-sm">
+                <!-- Filter Button -->
+              {%  if closed is none %}
+                <div class="btn-group">
+                    <button id="eclectic-all-btn" type="button" class="btn btn-primary active"> All</button>
+                    <button id="eclectic-open-btn" type="button" class="btn btn-primary"> Open </button>
+                    <button id="eclectic-closed-btn" type="button" class="btn btn-primary"> Closed</button>
+                </div>
+              {%  elif closed %}
+                <div class="btn-group">
+                    <button id="eclectic-all-btn" type="button" class="btn btn-primary"> All</button>
+                    <button id="eclectic-open-btn" type="button" class="btn btn-primary"> Open </button>
+                    <button id="eclectic-closed-btn" type="button" class="btn btn-primary active"> Closed </button>
+                </div>
+              {% else %}
+                <div class="btn-group">
+                    <button id="eclectic-all-btn" type="button" class="btn btn-primary"> All</button>
+                    <button id="eclectic-open-btn" type="button" class="btn btn-primary active"> Open </button>
+                    <button id="eclectic-closed-btn" type="button" class="btn btn-primary"> Closed </button>
+                </div>
+              {% endif %}
+            </div>
+            <div class="col-sm raise-new-btn">
+                {% if not staff %}
+                <a href="/dashboard/ticket/new/"><button type="button" class="btn btn-primary p-2"><i class="fas fa-plus" style="font-size: 0.9em;"></i> Raise New Ticket</button></a>
+                {% endif %}
+            </div>
+        </div>
+        <br>
+        <p class="reminder pl-3">-Click on View Button to reply or view the whole communication</p>
+        <br>
+        {% for ticket in tickets %}
+        <div class="card mb-3 shadow-sm rounded-lger text-center">
+          <div class="card-header p-3 card-header-round">
+              <div class="row">
+                  <div class="col-sm-2 "><b>Ticket ID : </b>{{ format_id(ticket.get_id()) }}</div>
+                  <div class="col-sm-6 "><b>Subject : </b>{{ ticket.subject }}</div>
+                  <div class="col-sm-2 ">Status</div>
+                  <div class="col-sm-2 "></div>
+              </div>
+          </div>
+          <div class="card-body p-3 card-body-round">
+              <div class="row">
+                  <div class="col-sm-6 ">
+                      <div class="d-flex flex-column">
+                        <div class="p-1 text-info">{{ ticket.get_last_datetime() }}</div>
+                        <div class="p-1"><b>{{ ticket.get_last_sent() }}:</b>
+                          {% if ticket.get_last_reply() is not none%}
+                          {{ ticket.get_last_reply() }}
+                          {% else %}
+                          File Message
+                          {% endif %}
+                        </div>
+                      </div>
+                  </div>
+                  <div class="col-sm-2"></div>
+                  <div class="col-sm-2">
+                    {% if ticket.is_closed()%}
+                        <h5 class="text-danger">Closed</h5>
+                    {% else %}
+                        <h5 class="text-success">Open</h5>
+                    {% endif %}
+                  </div>
+                  <div class="col-sm-2 ">
+                        <a href="/dashboard/ticket/{{ticket.get_id()}}/" class="btn btn-info">View</a>
+                  </div>
+              </div>
+          </div>
+        </div>
+        {% endfor %}
+
+    </div>
+</div>
+{% endblock %}

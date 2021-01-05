@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% set active_page = "ticket" %}
+{% block title %}Eclectic New Ticket {% endblock %}
+
+{% block scripts %}
+  <script src="{{ url_for('static' , filename='js/ticket_create.js') }}"></script>
+{% endblock %}
+
+{% block css %}{% endblock %}
+
+{% block navbar %}
+<!-- Logic to check logged in user and display relevant dashboard-->
+    {% if staff %}
+        {% include "pages/staff_dashboard.html" %}
+    {% else %}
+        {% include "pages/customer_dashboard.html" %}
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="main">
+    <br>
+    <div class="eclectic-back-container">
+        <a href="/dashboard/support/" class="eclectic-back-btn"><i class="fas fa-angle-left"></i> Back</a>
+    </div>
+    <br>
+
+    <div class="new-ticket-container ">
+            <h2 class="page-header margin-left-dashboard text-center"> New Ticket </h2>
+            <hr class="width-95">
+            <form action="" method="post" enctype="multipart/form-data" id="ticket-create-form">
+              {{ form.hidden_tag() }}
+                <p><b>{{ form.subject.label }}</b></p>
+              {{ form.subject() }}
+                <br>
+                <p><b>{{ form.files.label }}</b></p>
+              {{ form.files() }}
+                <br>
+                <p><b>{{ form.description.label }}</b></p>
+              {{ form.description() }}
+                <br>
+              {{ form.submit_btn() }}
+            </form>
+    </div>
+
+<br>
+
+</div>
+{% endblock %}

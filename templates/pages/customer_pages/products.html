@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}Eclectic Products {% endblock %}
+{% set active_page = "products" %}
+{% block scripts %}
+<script src="{{ url_for('static' , filename='js/chatbot.js') }}"></script>
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/chatbot.css') }}">
+{% endblock %}
+
+{% block navbar %}
+    {% if staff %}
+        {% include "pages/staff_dashboard.html" %}
+    {% else %}
+        {% include "pages/customer_dashboard.html" %}
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="main">
+    <!-- Search form -->
+    <br>
+    <h2 class="page-header margin-left-dashboard">Products</h2>
+    <form class="eclectic_search" action="/dashboard/products">
+        <input type="text" placeholder="Search.." name="search">
+        <button type="submit"><span id="mont-font"><i class="fas fa-search"></i> Search</span></button>
+    </form>
+    <br>
+    <hr class="width-95">
+    <!-- Products -->
+    <div class="eclectic-card-deck">
+      <ul class="eclectic-cards">
+      {% for product in products %}
+        <li class="eclectic-cards-item">
+          <div class="eclectic-card">
+            <div class="eclectic-card-image"><img class="card-img" src="{{ product.pic_link }}" alt="product picture"></div>
+            <div class="eclectic-card-content">
+              <h2 class="eclectic-card-title">{{ product.get_title() }}</h2>
+              <p class="eclectic-card-text">Retail price: ${{ product.retail_price }}</p>
+              <a href="/dashboard/products/{{ product.get_id() }}/" class="eclectic-btn">Details</a>
+            </div>
+          </div>
+        </li>
+      {% endfor %}
+      </ul>
+    </div>
+</div>
+{% include 'includes/chatbot.html' %}
+{% endblock %}

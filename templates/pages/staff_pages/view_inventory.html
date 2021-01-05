@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block title %}Eclectic View Inventory {% endblock %}
+{% set active_page = "inventory" %}
+{% block scripts %}{% endblock %}
+
+{% block css %}{% endblock %}
+
+{% block navbar %}
+<!-- Logic to check logged in user and display relevant dashboard-->
+    {% if staff %}
+        {% include "pages/staff_dashboard.html" %}
+    {% else %}
+        {% include "pages/customer_dashboard.html" %}
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="main">
+    <br>
+    <h2 class="page-header margin-left-dashboard">View Inventory</h2>
+    <hr class="width-95">
+    <div class="margin-left-dashboard">
+        <div class="d-flex justify-content-between">
+            <h3 class="total-count">Total Products: {{ count }}</h3>
+            <a href="/dashboard/inventory/add/"><button class="add-new-product" type="button">+ Add New Product</button></a>
+        </div>
+        <br>
+    <!--Table-->
+        <div class="eclectic-table-wrapper">
+          <div class="eclectic-table">
+                <div class="eclectic-row eclectic-table-header">
+                  <div class="eclectic-cell">
+                    Product Name
+                  </div>
+                  <div class="eclectic-cell">
+                    Cost Price ($)
+                  </div>
+                  <div class="eclectic-cell">
+                    Retail Price ($)
+                  </div>
+                  <div class="eclectic-cell">
+                    Stock
+                  </div>
+                  <div class="eclectic-cell">
+                    Update Details
+                  </div>
+                </div>
+
+              {% for product in products %}
+                <div class="eclectic-row">
+                  <div class="eclectic-cell" data-title="name">
+                    {{ product.get_title() }}
+                  </div>
+                  <div class="eclectic-cell" data-title="cost-price">
+                    {{ product.get_cost_price() }}
+                  </div>
+                  <div class="eclectic-cell" data-title="retail-price">
+                    {{ product.retail_price }}
+                  </div>
+                  <div class="eclectic-cell" data-title="stock">
+                    {{ product.stock }}
+                  </div>
+                  <div class="eclectic-cell" data-title="edit">
+                    <a class="btn btn-primary" href="/dashboard/inventory/update/{{ product.get_id() }}/">Edit</a>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+

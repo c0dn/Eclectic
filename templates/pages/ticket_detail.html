@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+{% block title %}Eclectic Ticket Details {% endblock %}
+{% set active_page = "ticket" %}
+{% block scripts %}
+<script src="{{ url_for('static' , filename='js/ticket.js') }}"></script>
+{% endblock %}
+
+{% block css %}{% endblock %}
+
+{% block navbar %}
+<!-- Logic to check logged in user and display relevant dashboard-->
+    {% if staff %}
+        {% include "pages/staff_dashboard.html" %}
+    {% else %}
+        {% include "pages/customer_dashboard.html" %}
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="main">
+    <br>
+    <div class="eclectic-back-container">
+        <a href="/dashboard/support/" class="eclectic-back-btn"><i class="fas fa-angle-left"></i> Back</a>
+    </div>
+    <br>
+    <h2 class="page-header margin-left-dashboard">Ticket ID : <span class="unbold">{{ format_id(ticket.get_id()) }}</span></h2>
+    <hr class="width-95">
+    <br>
+
+    <div class="card ticket-detail-container container-fluid">
+        <div class="subject-container row justify-content-between">
+            <h5 class="ticket-subject col-sm-6 p-2"><b>Subject:</b> {{ ticket.subject }}</h5>
+            {% if ticket.is_closed()%}
+                <h5 class="text-danger col-sm-4 p-2">Closed</h5>
+            {% else %}
+              <h5 class="text-success col-sm-4 p-2">Open</h5>
+              <button value="{{ ticket.get_id() }}" id="eclectic-ticket-close" type="button" class="btn btn-danger col-sm-2 ">Close Ticket</button>
+            {% endif %}
+        </div>
+        <div class="description-attached-container">
+            <p class="p-1"><b>Description:</b><br> {{ ticket.get_first_msg() }}</p>
+            <p class="p-1"><b>Attached Files:</b><br>{% if ticket.get_first_files() != [] %} {% for file in ticket.get_first_files() %}<a href="{{ file.get_link() }}" target="_blank">{{ file.get_filename() }}</a> {% endfor %} {% else %} No Uploaded File {% endif %}</p>
+        </div>
+        <div class="card-header" id="messages-container">
+            {% for message in ticket.get_messages() %}
+              {% if staff %}
+                {% if message.sent_by.get_id() != ticket.created_by.get_id() %}
+                    <div class="bubbleWrapper">
+                        <div class="inlineContainer own">
+                            <div class="ownBubble own">
+                                <b>{{ message.sent_by.get_name() }}:</b>
+                            {% if message.content is not none %}
+                              <p id="updateTicket_message">{{ message.content }}</p>
+                            {% else %}
+                              {% for file in message.get_files() %}
+                              <br><a href="{{ file.get_link() }}" id="updateTicket_message" target="blank">{{ file.get_filename() }}</a>
+                              {% endfor %}
+                            {% endif %}
+                            </div>
+                        </div><span class="own">{{ message.get_sent_on() }}</span>
+                    </div>
+                    {% else %}
+                    <div class="bubbleWrapper">
+                        <div class="inlineContainer">
+                            <div class="otherBubble other">
+                                <div class="content">
+                                    <b>{{ message.sent_by.get_name() }}:</b>
+                              {% if message.content is not none %}
+                              <p id="updateTicket_message">{{ message.content }}</p>
+                              {% else %}
+                                {% for file in message.get_files() %}
+                                <br><a href="{{ file.get_link() }}" id="updateTicket_message" target="blank">{{ file.get_filename() }}</a>
+                                {% endfor %}
+                              {% endif %}
+                                </div>
+                            </div>
+                        </div><span class="other">{{ message.get_sent_on() }}</span>
+                    </div>
+                {% endif %}
+              {% else %}
+                {% if message.sent_by.get_id() == ticket.created_by.get_id() %}
+                    <div class="bubbleWrapper">
+                        <div class="inlineContainer own">
+                            <div class="ownBubble own">
+                              <b>{{ message.sent_by.get_name() }}:</b>
+                              {% if message.content is not none %}
+                              <p id="updateTicket_message">{{ message.content }}</p>
+                              {% else %}
+                                {% for file in message.get_files() %}
+                                <br><a href="{{ file.get_link() }}" id="updateTicket_message" target="blank">{{ file.get_filename() }}</a>
+                                {% endfor %}
+                              {% endif %}
+                            </div>
+                        </div><span class="own">{{ message.get_sent_on() }}</span>
+                    </div>
+                    {% else %}
+                    <div class="bubbleWrapper">
+                        <div class="inlineContainer">
+                            <div class="otherBubble other">
+                                <div class="content">
+                                    <b>{{ message.sent_by.get_name() }}:</b>
+                                {% if message.content is not none %}
+                                  <p id="updateTicket_message">{{ message.content }}</p>
+                                {% else %}
+                                  {% for file in message.get_files() %}
+                                  <br><a href="{{ file.get_link() }}" id="updateTicket_message" target="blank">{{ file.get_filename() }}</a>
+                                  {% endfor %}
+                                {% endif %}
+                                </div>
+                            </div>
+                        </div><span class="other">{{ message.get_sent_on() }}</span>
+                    </div>
+                {% endif %}
+              {% endif %}
+            {% endfor %}
+        </div>
+
+            {% if ticket.is_closed() %}
+              <br>
+            {% else %}
+              <div class="send-container">
+                <form method="POST" enctype="multipart/form-data" id="eclectic-message-form">
+                  <input type="hidden" name="id" value="{{ ticket.get_id() }}">
+                  <input type="text" placeholder="Enter message" name="message" autocomplete="off">
+                  <label for="messages-file"><i class="eclectic-fa fas fa-folder-open"></i></label>
+                  <input type="file" id="messages-file" name="files" style="display:none;">
+                  <button name="submit_message" type="submit">`<i class="eclectic-fa fa fa-chevron-right"></i></button>
+                </form>
+              </div>
+            {% endif %}
+    </div>
+<br>
+</div>
+{% endblock %}

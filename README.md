@@ -13,12 +13,15 @@ Web App Application for Eclectic E-commerce Website
 * [William](https://github.com/willy00)
 
 ### Technologies:
-* Python 3.7.3
+* Python 3.8
 * Flask
   
 ### Configuration/Installation
 * Please read this guide to create your project on **Pycharm** 
   * https://www.jetbrains.com/help/pycharm/creating-and-running-your-first-python-project.html#create-file
 * Run `py -m pip install -r requirements.txt` on your pycharm terminal to install the packages required
+* Run `py -m nltk.downloader all` to download the necessary nltk data to run the virtual assistant bot
 * Run the `Eclectic.py` file
+* Run the `websocket_server.py` file
+* Access the App at http://127.0.0.1:5000/
 

@@ -9,9 +9,8 @@ from pattern.text.en import singularize, pluralize
 import Levenshtein
 
 # Config
-words_excluded = (
-"long", "much", "are", "cost", "great", "is", "for", "there", "how", "the", "it", "support", "last", "can", "of",
-"have")
+words_excluded = ("long", "much", "are", "cost", "great", "is", "for", "there", "how", "the", "it", "support", "last",
+                  "can", "of", "have")
 mapping = {
     "charge": "battery life",
     "charges": "charge cable",
@@ -228,7 +227,7 @@ def identify_product(parsed_input):
                         else:
                             return result_save
         elif similar_check_attr(word, all_products) and word.lower() not in words_excluded and not similar_check_attr(
-                word, all_attrs):
+              word, all_attrs):
             try:
                 search_query.append(word)
             except IndexError:
@@ -257,8 +256,7 @@ def identify_product(parsed_input):
                             return None
                         else:
                             return result_save
-        elif similar_check_attr(word, all_title) and word.lower() not in words_excluded and not similar_check_attr(word,
-                                                                                                                   all_attrs):
+        elif similar_check_attr(word, all_title) and word.lower() not in words_excluded and not similar_check_attr(word, all_attrs):
             try:
                 search_query.append(word)
             except IndexError:

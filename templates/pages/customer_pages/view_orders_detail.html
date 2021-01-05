@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+{% block title %}Eclectic Order Details {% endblock %}
+{% set active_page = "order" %}
+
+{% block scripts %}
+<script src="{{ url_for('static' , filename='js/orders.js') }}"></script>
+<script src="{{ url_for('static' , filename='js/chatbot.js') }}"></script>
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/chatbot.css') }}">
+{% endblock %}
+
+{% block navbar %}
+<!-- Logic to check logged in user and display relevant dashboard-->
+    {% if staff %}
+        {% include "pages/staff_dashboard.html" %}
+    {% else %}
+        {% include "pages/customer_dashboard.html" %}
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="main">
+    <br>
+    <div class="eclectic-back-container">
+        <a href="/dashboard/orders/" class="eclectic-back-btn"><i class="fas fa-angle-left"></i> Back</a>
+    </div>
+    <br>
+    <h2 class="page-header margin-left-dashboard">Order Details</h2>
+    <hr class="width-95">
+    <br>
+
+        <!-- Order Tracking -->
+    {% if order.is_delivered() %}
+    <div class="container order-status-container">
+        <ul class="order-status-list">
+          <li class="order-status"><i class="fas fa-money-check-alt"></i></li>
+          <li class="order-status"><i class="fas fa-truck"></i></li>
+          <li class="order-status current-status"><i class="fas fa-check"></i></li>
+        </ul>
+        <ul class="d-flex justify-content-center">
+          <li class="order-status-description">Payment Received</li>
+          <li class="order-status-description">On Its Way</li>
+          <li class="order-status-description order-status-current">Item Delivered</li>
+        </ul>
+    </div>
+    {% elif order.is_shipped() %}
+    <div class="container order-status-container">
+        <ul class="order-status-list">
+          <li class="order-status"><i class="fas fa-money-check-alt"></i></li>
+          <li class="order-status current-status"><i class="fas fa-truck"></i></li>
+          <li class="order-status"><i class="fas fa-check"></i></li>
+        </ul>
+        <ul class="d-flex justify-content-center">
+          <li class="order-status-description">Payment Received</li>
+          <li class="order-status-description order-status-current">On Its Way</li>
+          <li class="order-status-description">Item Delivered</li>
+        </ul>
+    </div>
+    {% else %}
+    <div class="container order-status-container">
+        <ul class="order-status-list" style="padding-left: 0px;">
+          <li class="order-status current-status"><i class="fas fa-money-check-alt"></i></li>
+          <li class="order-status"><i class="fas fa-truck"></i></li>
+          <li class="order-status"><i class="fas fa-check"></i></li>
+        </ul>
+        <ul class="container order-status-container" style="padding-left: 0px;">
+          <li class="order-status-description order-status-current">Payment Received</li>
+          <li class="order-status-description">On Its Way</li>
+          <li class="order-status-description">Item Delivered</li>
+        </ul>
+    </div>
+    {% endif %}
+
+    <br>
+    <div class="order-details-container container">
+      <div class="row">
+        <div class="col">
+            <p><span class="font-weight-bold">Order ID</span>: {{ order.get_id() }}</p>
+        </div>
+        <div class="col">
+            <P><span class="font-weight-bold">Date</span>: {{ order.get_ordered_datetime() }}</P>
+        </div>
+        <div class="col">
+            <p><span class="font-weight-bold">Total Price</span>: ${{ order.total_price }}</p>
+        </div>
+        <div class="col">
+            <p class="free">Free Delivery</p>
+        </div>
+      </div>
+    </div>
+        <br>
+    <div class="order-details-container container w-75">
+      <div class="row">
+        <div class="col">
+            <p><span class="font-weight-bold">Delivery Company</span>: {{ order.get_courier() }}</p>
+        </div>
+        <div class="col">
+            <p><span class="font-weight-bold">Tracking number</span>: {{ order.get_tracking() }}</p>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div>
+        <div class="eclectic-table-wrapper">
+              <div class="eclectic-table">
+                    <div class="eclectic-row eclectic-table-header">
+                      <div class="eclectic-cell bg-grey border-right border-white">
+                        Product
+                      </div>
+                      <div class="eclectic-cell bg-grey border-right border-white">
+                        Price
+                      </div>
+                      <div class="eclectic-cell bg-grey border-right border-white">
+                        Quantity
+                      </div>
+                      <div class="eclectic-cell bg-grey">
+                        Sub-Total
+                      </div>
+                    </div>
+        {% for sale in order.get_products() %}
+                    <div class="eclectic-row bg-white">
+                      <div class="eclectic-cell bg-white border-bottom" data-title="">
+                        <img class="eclectic-item-img shadow p-3 bg-white rounded" src="{{ sale.product.pic_link }}">
+                        <p class="ml-auto mr-auto font-weight-bold" style="margin-bottom: 0px;">{{ sale.product.get_title() }}</p>
+                      </div>
+                      <div class="eclectic-cell border-bottom" data-title="retail_price">
+                        {{ sale.product.retail_price }}
+                      </div>
+                      <div class="eclectic-cell border-bottom" data-title="quantity">
+                        {{ sale.quantity }}
+                      </div>
+                      <div class="eclectic-cell border-bottom" data-title="status">
+                        {{ sale.sub_total }}
+                      </div>
+                    </div>
+        {% endfor %}
+              </div>
+        </div>
+    </div>
+    <br>
+</div>
+{% include 'includes/chatbot.html' %}
+{% endblock %}
+
+

@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block title %}Eclectic Add Inventory {% endblock %}
+{% set active_page = "inventory" %}
+{% block scripts %}
+    <script src="{{url_for('static', filename='js/inventory.js')}}"></script>
+{% endblock %}
+
+{% block css %}{% endblock %}
+
+{% block navbar %}
+<!-- Logic to check logged in user and display relevant dashboard-->
+    {% if staff %}
+        {% include "pages/staff_dashboard.html" %}
+    {% else %}
+        {% include "pages/customer_dashboard.html" %}
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="main">
+    <br>
+    <h2 class="page-header margin-left-dashboard">Add Inventory</h2>
+    <hr class="width-95">
+    <br>
+
+    <div class="eclectic-back-container">
+        <a href="/dashboard/inventory" class="eclectic-back-btn"><i class="fas fa-angle-left"></i> Back</a>
+    </div>
+    <br>
+        <div class="margin-top-container">
+            <!-- Add Inventory Form -->
+            <form method="post" enctype="multipart/form-data" id="eclectic-inventory-add">
+                <div class="margin-left-dashboard row">
+                    <div class="col-sm-6">
+                    <div class="eclectic-card">
+                        <div class="eclectic-card-image">
+                            <div class="select-image">
+                                <label class="file_btn" for="file">Upload Image</label>
+                                <input type="file" id="file" name="file" accept=".jpg, .jpeg, .png" style="display: none;">
+                            </div>
+                              <div class="preview">
+                                <p class="no_files">No files currently selected for upload</p>
+                              </div>
+                        </div>
+                            <div class="eclectic-card-content">
+                                <h2 class="eclectic-card-title text-center">Name : <input type="text" name="title" required></h2>
+                            </div>
+                    </div>
+                        <br>
+                    </div>
+                        <div class="col-sm-6">
+                            <div class="eclectic-product-description">
+                                <p class="description"><span style="font-weight: 800; font-size: 1.2em;">Description:</span><br><textarea class="textarea" name="description" rows="8" cols="40" required></textarea></p>
+                                <br>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                    <p class="w-100 retail-price">Retail Price : <span style="color: MediumBlue ;">$&nbsp;<input type="number" step="0.01" min="0" name="retail_price" required></span></p>
+                                    </div>
+                                    <div class="col-sm-6">
+                                    <p class="w-100 retail-price ">Cost price: <span style="color: MediumBlue ;">$&nbsp;<input type="number" step="0.01" min="0" name="cost_price" required></span></p>
+                                    </div>
+                                </div>
+                                <br>
+                                <p class="retail-price">Stock:&nbsp;<span style="color: MediumBlue ;"><input type="number" min="0" name="stock" required></span></p>
+                                <br>
+
+                                <input type="submit" name="submit_btn" class="product-detail-btn" value="Add New Product">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+{% endblock %}
+

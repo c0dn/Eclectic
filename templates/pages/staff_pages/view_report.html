@@ -1,0 +1,182 @@
+{% extends "base.html" %}
+{% block title %} Eclectic View Reports {% endblock %}
+{% set active_page = "report" %}
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+<script src="{{ url_for('static' , filename='js/report.js') }}"></script>
+{% endblock %}
+
+{% block css %}{% endblock %}
+
+{% block navbar %}
+<!-- Logic to check logged in user and display relevant dashboard-->
+    {% if staff %}
+        {% include "pages/staff_dashboard.html" %}
+    {% else %}
+        {% include "pages/customer_dashboard.html" %}
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+
+<div class="main">
+    <br>
+    <div>
+        <h2 class="page-header margin-left-dashboard float-left">View Reports</h2>
+        <select class="year-select float-right text-center" name="year">
+        {% for year in year_list %}
+            {% if year == year_filter %}
+              <option value="{{year}}" selected="selected">{{year}}</option>
+            {% else %}
+              <option value="{{year}}">{{year}}</option>
+            {% endif %}
+        {% endfor %}
+        </select>
+    </div>
+    <br>
+
+    <hr class="width-95">
+    <div class="p-2" style="background-color: #F6F6F6;">
+        <div class="margin-left-dashboard mr-5">
+            <div class="all-report-container">
+              <div class="report-container shadow">
+                  <p class="report-header">Monthly Sales</p>
+                  <canvas id="myChart" ></canvas>
+              </div>
+              <div class="report-container shadow">
+                  <p class="report-header">Sales Distribution</p>
+                  <canvas id="myPieChart"></canvas>
+              </div>
+              <div class="report-container shadow">
+                  <p class="report-header">Profit Margin for the Year</p>
+                  <canvas id="myChart2"></canvas>
+              </div>
+              <div class="report-container shadow">
+                  <p class="report-header">Total Profit for the year</p>
+                  <h2 class="text-center total-profit">$ {{total_profit}} </h2>
+              </div>
+            </div>
+        </div>
+    </div>
+    <br>
+</div>
+
+<script>
+var ctx = document.getElementById('myChart').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels:[{% for item in labels_1 %} "{{item}}",{% endfor %}],
+        datasets: [{
+            label:'{{ legend_1 }}',
+            data:[{% for item in values_1 %}{{item}},{% endfor %}],
+            backgroundColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)',
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)',
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        },
+        legend: {
+            display: false
+         }
+    }
+});
+
+
+var ctx = document.getElementById('myPieChart').getContext('2d');
+var myPieChart = new Chart(ctx, {
+    type: 'pie',
+    data: {
+      labels: [{% for item in labels_2 %}"{{item}}".replace("&#39;&#39;", "''"),{% endfor %}],
+      datasets: [{
+        label: "{{ legend_2 }}",
+        backgroundColor: ['rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86,1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64,1)',
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'],
+        data: [{% for item in values_2 %}{{item}},{% endfor %}]
+      }]
+    },
+    options: {
+      title: {
+        display: false
+      }
+    }
+});
+
+
+var ctx = document.getElementById('myChart2').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'horizontalBar',
+    data: {
+      labels: [{% for item in labels_3 %} "{{item}}".replace("&#39;&#39;", "''"),{% endfor %}],
+      datasets: [
+        {
+          label: '{{ legend_3 }}',
+          backgroundColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)',
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+          data: [{% for item in values_3 %} {{item}} ,{% endfor %}],
+        }
+      ]
+    },
+    options: {
+      legend: { display: false },
+    }
+});
+</script>
+
+{% endblock %}
+

@@ -65,12 +65,15 @@ class CreateProduct(FlaskForm):
     retail_price = StringField("Retail Price", [DataRequired()])
     description = TextAreaField("Description", [DataRequired()])
     submit_btn = SubmitField("Submit")
-    
+
+
 class AccountPasswordChange(FlaskForm):
     c_pass = PasswordField("Current Password", [DataRequired()])
     n_pass = PasswordField("New Password", [DataRequired()])
-    nc_pass = PasswordField("Confirm New Password", [DataRequired(), EqualTo("n_pass", message='Passwords must be the same')])
+    nc_pass = PasswordField("Confirm New Password",
+                            [DataRequired(), EqualTo("n_pass", message='Passwords must be the same')])
     submit_btn = SubmitField("Submit")
+
 
 class AccountAddressChange(FlaskForm):
     address = StringField("Address", [DataRequired()])
@@ -87,11 +90,13 @@ class AddCart(FlaskForm):
     class Meta:
         csrf = False
 
+
 class NewTicketForm(FlaskForm):
     subject = StringField("Subject", [DataRequired()])
     files = MultipleFileField("Attach file")
     description = TextAreaField("Description", [DataRequired()])
     submit_btn = SubmitField("Submit")
+
 
 class NewMessageForm(FlaskForm):
     class Meta:

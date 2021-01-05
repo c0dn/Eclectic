@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block title %} Eclectic View Customers {% endblock %}
+{% set active_page = "customers" %}
+{% block scripts %}
+  <script src="{{ url_for('static' , filename='js/users.js') }}"></script>
+{% endblock %}
+
+{% block css %}{% endblock %}
+
+{% block navbar %}
+<!-- Logic to check logged in user and display relevant dashboard-->
+    {% if staff %}
+        {% include "pages/staff_dashboard.html" %}
+    {% else %}
+        {% include "pages/customer_dashboard.html" %}
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="main">
+    <br>
+    <h2 class="page-header margin-left-dashboard">View Customers</h2>
+    <hr class="width-95">
+    <div class="margin-left-dashboard">
+    <!--Table-->
+        <div class="eclectic-table-wrapper">
+          <div class="eclectic-table">
+                <div class="eclectic-row eclectic-table-header">
+                  <div class="eclectic-cell">
+                    Name
+                  </div>
+                  <div class="eclectic-cell">
+                    Email
+                  </div>
+                  <div class="eclectic-cell">
+                    Phone Number
+                  </div>
+                  <div class="eclectic-cell">
+                    Action
+                  </div>
+                </div>
+
+                {% for user in users %}
+                <div class="eclectic-row">
+                  <div class="eclectic-cell" data-title="Name">
+                     {{ user.get_name() }}
+                  </div>
+                  <div class="eclectic-cell" data-title="Email">
+                      {{ user.email }}
+                  </div>
+                  <div class="eclectic-cell" data-title="Phone Number">
+                      {{ user.contact_number }}
+                  </div>
+                  <div class="eclectic-cell" data-title="">
+                      <button value="{{ user.get_id() }}" class="btn btn-danger eclectic-deactivate-btn">Deactivate</button>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+
+
+
+
+

@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% block title %}Eclectic Order {% endblock %}
+{% set active_page = "order" %}
+
+{% block scripts %}
+<script src="{{ url_for('static' , filename='js/orders.js') }}"></script>
+<script src="{{ url_for('static' , filename='js/chatbot.js') }}"></script>
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/chatbot.css') }}">
+{% endblock %}
+
+
+{% block navbar %}
+<!-- Logic to check logged in user and display relevant dashboard-->
+    {% if staff %}
+        {% include "pages/staff_dashboard.html" %}
+    {% else %}
+        {% include "pages/customer_dashboard.html" %}
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="main" xmlns="http://www.w3.org/1999/html">
+    <br>
+    <h2 class="page-header margin-left-dashboard">My Orders</h2>
+    <hr class="width-95">
+    <div class="margin-left-dashboard">
+        <div>
+            <!-- Filter Button -->
+          {%  if delivered is none %}
+            <div class="btn-group">
+                <button id="eclectic-all-btn" type="button" class="btn btn-primary active"> All</button>
+                <button id="eclectic-deliver-btn" type="button" class="btn btn-primary"> Delivering</button>
+                <button id="eclectic-history-btn" type="button" class="btn btn-primary"> Transaction History</button>
+            </div>
+          {%  elif not delivered %}
+            <div class="btn-group">
+                <button id="eclectic-all-btn" type="button" class="btn btn-primary"> All</button>
+                <button id="eclectic-deliver-btn" type="button" class="btn btn-primary active"> Delivering</button>
+                <button id="eclectic-history-btn" type="button" class="btn btn-primary"> Transaction History</button>
+            </div>
+          {% else %}
+            <div class="btn-group">
+                <button id="eclectic-all-btn" type="button" class="btn btn-primary"> All</button>
+                <button id="eclectic-deliver-btn" type="button" class="btn btn-primary"> Delivering</button>
+                <button id="eclectic-history-btn" type="button" class="btn btn-primary active"> Transaction History</button>
+            </div>
+          {% endif %}
+        </div>
+
+        <br>
+    <!--Table-->
+        <div class="eclectic-table-wrapper">
+          <div class="eclectic-table">
+                <div class="eclectic-row eclectic-table-header">
+                  <div class="eclectic-cell">
+                    Order ID
+                  </div>
+                  <div class="eclectic-cell">
+                    Date
+                  </div>
+                  <div class="eclectic-cell">
+                    Total Spent ($)
+                  </div>
+                  <div class="eclectic-cell">
+                    Status
+                  </div>
+                  <div class="eclectic-cell">
+                    Details
+                  </div>
+                </div>
+
+                {% for order in orders %}
+                <div class="eclectic-row">
+                  <div class="eclectic-cell" data-title="id">
+                    {{ format_id(order.get_id()) }}
+                  </div>
+                  <div class="eclectic-cell" data-title="date">
+                    {{ order.get_ordered_datetime() }}
+                  </div>
+                  <div class="eclectic-cell" data-title="total-spent">
+                    {{ order.total_price }}
+                  </div>
+                  <div class="eclectic-cell" data-title="status">
+                    {% if order.is_shipped() and order.is_delivered() %}
+                        Item Delivered
+                    {% elif order.is_shipped() %}
+                        On Its Way
+                    {% else %}
+                        Payment received
+                    {% endif %}
+                  </div>
+                  <div class=" eclectic-cell" data-title="edit">
+                    <a class="btn btn-info" href="/dashboard/orders/{{ order.get_id() }}">Details</a>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+        </div>
+    </div>
+    <br>
+</div>
+{% include 'includes/chatbot.html' %}
+{% endblock %}

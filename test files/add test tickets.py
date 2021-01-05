@@ -1,6 +1,6 @@
 import load_helper as dat_loader
 from ticket import Ticket, Message
-from file import Attached_File
+from file import AttachedFile
 from werkzeug.utils import secure_filename
 from parsers import size_readable
 from users import Customer
@@ -16,7 +16,7 @@ def upload_attached(filename, user_obj):
   file_size = size_readable(os.path.getsize(file_path))
   file_dat = dat_loader.load_data("Files")
   file_id = file_dat["id"]
-  f_obj = Attached_File(file_id, filename, file_path, file_type, file_size, user_obj)
+  f_obj = AttachedFile(file_id, filename, file_path, file_type, file_size, user_obj)
   file_list = file_dat["data"]
   file_list.append(f_obj)
   dat_loader.write_data("Files", file_list)

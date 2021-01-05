@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block title %}Eclectic Product Details {% endblock %}
+{% set active_page = "products" %}
+
+{% block scripts %}
+  <script src="{{ url_for('static' , filename='js/product_details.js') }}"></script>
+<script src="{{ url_for('static' , filename='js/chatbot.js') }}"></script>
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/chatbot.css') }}">
+{% endblock %}
+
+
+{% block navbar %}
+<!-- Logic to check logged in user and display relevant dashboard-->
+    {% if staff %}
+        {% include "pages/staff_dashboard.html" %}
+    {% else %}
+        {% include "pages/customer_dashboard.html" %}
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="main">
+    <br>
+    <form class="eclectic_search" action="/dashboard/products">
+        <input type="text" placeholder="Search.." name="search">
+        <button type="submit"><span id="mont-font"><i class="fas fa-search"></i> Search</span></button>
+    </form>
+    <br>
+    <hr class="width-95">
+    <div class="eclectic-back-container">
+        <a href="/dashboard/products" class="eclectic-back-btn"><i class="fas fa-angle-left"></i> Back</a>
+    </div>
+    <br>
+    <div class="margin-top-container">
+        <div class="row">
+            <div class="col-sm-6">
+            <div class="eclectic-card">
+                <div class="eclectic-card-image"><img class="card-img" src="{{ product.pic_link }}" alt="product picture"></div>
+                    <div class="eclectic-card-content">
+                        <h2 class="eclectic-card-title text-center">{{ product.get_title() }}</h2>
+                    </div>
+            </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="eclectic-product-description">
+                    <p class="description"><span style="font-weight: 800; font-size: 1.2em;">Description:</span> <br> {{ product.get_description() }}</p>
+                    <br>
+                    <p class="retail-price">Retail price: <span style="color: MediumBlue ;">${{ product.retail_price }}</span></p>
+                    <br>
+                </div>
+                {% if product.stock != 0 %}
+                    <form method="post" action="/api-service/cart/add/" id="eclectic-add-cart">
+                      <div class="retail-price quantity">
+                        <label>Quantity : &nbsp;</label>
+                        <input type="number" name="quantity" min="1" max="{{ product.stock }}" oninvalid="InvalidMsg(this);" required>
+                      </div>
+                      <br>
+                      <input type="hidden" name="id" value="{{ product.get_id() }}">
+                      <input type="submit" class="product-detail-btn" name="cart" value="Add To Cart"></form>
+                    </form>
+                {% else %}
+                    <input type="submit" class="product-detail-btn" value="Currently Out of Stock" disabled></form>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <br>
+</div>
+{% include 'includes/chatbot.html' %}
+{% endblock %}
