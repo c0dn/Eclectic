@@ -1,5 +1,7 @@
 # Eclectic
 
+## Archived - Old School projects
+
 ## NYP DSF1901 Year 1 Semester 2 Group Project
 
 ### Description
@@ -10,7 +12,7 @@ Web App Application for Eclectic E-commerce Website
 
 * [Dylan](https://github.com/Dylan-Liew)
 * [Joel](https://github.com/j041)
-* [William](https://github.com/willy00)
+* [William](https://github.com/c0dn)
 
 ### Technologies:
 * Python 3.8
